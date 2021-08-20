@@ -19,3 +19,21 @@ crab_size <- read_csv(here("data", "FiddlerCrabBodySize.csv")) %>%
   clean_names()
 ```
 
+```{r, echo=FALSE, fig.alt="A scatter plot showing the mean carapice width measured daily growing as the mean annual water temperature drops."}
+
+daily_summary <- crab_size %>% 
+  group_by(date) %>% 
+  summarize(daily_carapice_width = mean(carapace_width), daily_matw = mean(matw))
+
+
+ggplot(data = daily_summary, aes(x = daily_carapice_width, y = daily_matw)) +
+  geom_point(aes(color = daily_carapice_width), show.legend = FALSE) +
+  labs(x = "Mean Carapice Width",
+       y = "Mean Annual Water Temp", 
+       title = "Fiddler Crab Carapice Width Influenced By Mean Annual Water Temperature", 
+       caption = "Data sourced from: https://portal.edirepository.org/nis/mapbrowse?packageid=knb-lter-pie.540.1")
+```
+
+
+
+
