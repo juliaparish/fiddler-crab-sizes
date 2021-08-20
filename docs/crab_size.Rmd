@@ -11,6 +11,7 @@ knitr::opts_chunk$set(echo = TRUE)
 library(tidyverse)
 library(here)
 library(janitor)
+library(kableExtra)
 
 ```
 
@@ -34,6 +35,22 @@ ggplot(data = daily_summary, aes(x = daily_carapice_width, y = daily_matw)) +
        caption = "Data sourced from: https://portal.edirepository.org/nis/mapbrowse?packageid=knb-lter-pie.540.1")
 ```
 
+```{r, echo=FALSE}
+crab_summary <- crab_size %>% 
+  group_by(site) %>% 
+  summarize(mean = round(mean(carapace_width), 2),
+            sd = round(sd(carapace_width),2),
+            sample_size = n())
+```
 
+```{r, echo=FALSE}
+crab_table <- crab_summary %>% 
+  kable(col.names = c("Site Location", "Mean Carapace Width (mm)", "Carapace Width Std Dev (mm)", "Sample Size")) %>% 
+  kable_minimal(full_width = FALSE)
+
+crab_table
+
+
+```
 
 
