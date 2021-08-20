@@ -16,10 +16,12 @@ library(kableExtra)
 ```
 
 
-```{r}
+```{r, echo=FALSE}
 crab_size <- read_csv(here("data", "FiddlerCrabBodySize.csv")) %>%
   clean_names()
 ```
+
+**Figure 1:** In this analysis we used data from the EDI data portal measuring Fiddler crab body sizes in salt marshes from Massachusetts to Florida. In the graph below, we compared carapace widths to site latitudes. 
 
 
 ```{r, echo=FALSE, fig.alt="A scatter plot showing the fiddler crab carapice widths measured in mm slightly trending smaller at lower latitudes."}
@@ -33,10 +35,11 @@ ggplot(data = crab_size, aes(x = carapace_width, y = latitude)) +
   labs(x = "Carapace Width (mm)",
        y = "Latitude",
        title = "Fiddle Crab Carapace Widths Compared to Site Latitudes",
-       caption = "Data sourced from: https://portal.edirepository.org/nis/mapbrowse?packageid=knb-lter-pie.540.1")
+       caption = "Figure 1")
 
 
 ```
+
 
 ```{r, echo=FALSE}
 crab_summary <- crab_size %>% 
@@ -47,14 +50,17 @@ crab_summary <- crab_size %>%
 ```
 
 
+**Figure 2:** This table shows a summary of carapace width means and standard deviations per site location. It also shows the sample size for each site location.
+
 ```{r, echo=FALSE}
 crab_table <- crab_summary %>% 
-  kable(col.names = c("Site Location", "Mean Carapace Width (mm)", "Carapace Width Std Dev (mm)", "Sample Size")) %>% 
+  kable(col.names = c("Site Location", "Mean Carapace Width (mm)", "Carapace Width Std Dev (mm)", "Sample Size"), 
+                      caption = "Figure 2") %>% 
   kable_minimal(full_width = FALSE)
 
 crab_table
 ```
-
+**Figure 3:** The graph below shows the influence of mean annual water temperatures on Fiddler crab sizes. 
 
 ```{r, echo=FALSE, fig.alt="A scatter plot showing the mean carapice width measured daily growing as the mean annual water temperature drops."}
 ggplot(data = daily_summary, aes(x = daily_carapice_width, y = daily_matw)) +
@@ -62,11 +68,11 @@ ggplot(data = daily_summary, aes(x = daily_carapice_width, y = daily_matw)) +
   labs(x = "Mean Carapice Width",
        y = "Mean Annual Water Temp", 
        title = "Fiddler Crab Carapice Width Influenced By Mean Annual Water Temperature", 
-       caption = "Data sourced from: https://portal.edirepository.org/nis/mapbrowse?packageid=knb-lter-pie.540.1")
+       caption = "Figure 3")
 
 
 ```
 
-
+**Data sourced from: https://portal.edirepository.org/nis/mapbrowse?packageid=knb-lter-pie.540.1"**
 
 
