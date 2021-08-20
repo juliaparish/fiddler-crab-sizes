@@ -15,24 +15,27 @@ library(kableExtra)
 
 ```
 
+
 ```{r}
 crab_size <- read_csv(here("data", "FiddlerCrabBodySize.csv")) %>%
   clean_names()
 ```
 
-```{r, echo=FALSE, fig.alt="A scatter plot showing the mean carapice width measured daily growing as the mean annual water temperature drops."}
+
+```{r, echo=FALSE, fig.alt="A scatter plot showing the fiddler crab carapice widths measured in mm slightly trending smaller at lower latitudes."}
 
 daily_summary <- crab_size %>% 
   group_by(date) %>% 
   summarize(daily_carapice_width = mean(carapace_width), daily_matw = mean(matw))
 
-
-ggplot(data = daily_summary, aes(x = daily_carapice_width, y = daily_matw)) +
-  geom_point(aes(color = daily_carapice_width), show.legend = FALSE) +
-  labs(x = "Mean Carapice Width",
-       y = "Mean Annual Water Temp", 
-       title = "Fiddler Crab Carapice Width Influenced By Mean Annual Water Temperature", 
+ggplot(data = crab_size, aes(x = carapace_width, y = latitude)) +
+  geom_point(aes(color = site)) +
+  labs(x = "Carapace Width (mm)",
+       y = "Latitude",
+       title = "Fiddle Crab Carapace Widths Compared to Site Latitudes",
        caption = "Data sourced from: https://portal.edirepository.org/nis/mapbrowse?packageid=knb-lter-pie.540.1")
+
+
 ```
 
 ```{r, echo=FALSE}
@@ -43,14 +46,27 @@ crab_summary <- crab_size %>%
             sample_size = n())
 ```
 
+
 ```{r, echo=FALSE}
 crab_table <- crab_summary %>% 
   kable(col.names = c("Site Location", "Mean Carapace Width (mm)", "Carapace Width Std Dev (mm)", "Sample Size")) %>% 
   kable_minimal(full_width = FALSE)
 
 crab_table
+```
+
+
+```{r, echo=FALSE, fig.alt="A scatter plot showing the mean carapice width measured daily growing as the mean annual water temperature drops."}
+ggplot(data = daily_summary, aes(x = daily_carapice_width, y = daily_matw)) +
+  geom_point(aes(color = daily_carapice_width), show.legend = FALSE) +
+  labs(x = "Mean Carapice Width",
+       y = "Mean Annual Water Temp", 
+       title = "Fiddler Crab Carapice Width Influenced By Mean Annual Water Temperature", 
+       caption = "Data sourced from: https://portal.edirepository.org/nis/mapbrowse?packageid=knb-lter-pie.540.1")
 
 
 ```
+
+
 
 
